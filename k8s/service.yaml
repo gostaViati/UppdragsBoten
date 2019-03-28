@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: outlooktoslack
+spec:
+  selector:
+    app: outlooktoslack
+  ports:
+  - name: default
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: NodePort

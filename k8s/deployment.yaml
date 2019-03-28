@@ -1,0 +1,42 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: outlooktoslack
+spec:
+  selector:
+      matchLabels:
+        app: outlooktoslack
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: outlooktoslack
+    spec:
+      volumes:
+        - name: outlooktoslack-pv-storage
+          persistentVolumeClaim:
+            claimName: outlooktoslack-pv-claim
+      containers:
+        - name: outlooktoslack
+          image: localhost:32000/outlooktoslack
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: "/mnt/data"
+              name: outlooktoslack-pv-storage
+          env:
+            - name: EMAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: outlooktoslack-secret
+                  key: email_username
+            - name: EMAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: outlooktoslack-secret
+                  key: email_password
+            - name: SLACK_WEBHOOK
+              valueFrom:
+                secretKeyRef:
+                  name: outlooktoslack-secret
+                  key: slack_webhook
