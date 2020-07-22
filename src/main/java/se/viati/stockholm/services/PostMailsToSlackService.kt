@@ -103,7 +103,7 @@ class PostMailsToSlackService {
 
   companion object {
 
-    private val NOT_NEEDED_TEXT = arrayOf(
+    val NOT_NEEDED_TEXT = arrayOf(
         "meOneförfrågan för ",
         "ITC Network söker till ",
         "ITC Network söker för ",
@@ -128,8 +128,30 @@ class PostMailsToSlackService {
         "*",
         "VB: ",
         "SV: ",
-        "meOneförfrågning för "
-    )
+        "Konsultförfrågan från meOne för ",
+        "RFI avseende ",
+        "Förfrågan ",
+        "Förfrågan avseende ",
+        "Förfrågan  avseende ",
+        "Söker ",
+        "1 st ",
+        "ITC is looking for a ",
+        "ITC is looking for an ",
+        "ITC is looking for ",
+        "New request – ",
+        "Workforce Logiq har behov av ",
+        "New Request: ",
+        "Ny Förfrågan: ",
+        "Ny förfrågan- ",
+        "RFI - ",
+        "Fwd: ",
+        "Requisition: ",
+        "Resursbrist is looking for a ",
+        "Resursbrist is looking for ",
+        "Resursbrist ",
+        "Avrop av "
+    ).also { it.sortByDescending(String::length) }
+
     private val MAILS_TO_GET = 151
 
     private val logger = LoggerFactory.getLogger(PostMailsToSlackService::class.java)

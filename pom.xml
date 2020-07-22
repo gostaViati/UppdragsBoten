@@ -4,7 +4,7 @@
 
     <groupId>se.viati.stockholm</groupId>
     <artifactId>outlook-to-slack</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
     <packaging>jar</packaging>
 
     <name>outlook-to-slack</name>
