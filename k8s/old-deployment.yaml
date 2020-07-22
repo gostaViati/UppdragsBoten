@@ -18,8 +18,7 @@ spec:
             claimName: outlooktoslack-pv-claim
       containers:
         - name: outlooktoslack
-          image: outlooktoslack:local
-          imagePullPolicy: Never
+          image: localhost:32000/outlooktoslack
           ports:
             - containerPort: 8080
           volumeMounts:

@@ -34,7 +34,7 @@ class DatabaseService {
         return executeUpdate("drop table IF EXISTS email")
     }
 
-    public fun createDatabaseIfNotExists(initialId: String): Boolean {
+    fun createDatabaseIfNotExists(initialId: String): Boolean {
         executeUpdate("create table IF NOT EXISTS email (id TEXT UNIQUE, seen TEXT default CURRENT_TIMESTAMP)")
         return insertId(initialId)
     }
@@ -61,6 +61,10 @@ class DatabaseService {
                 null
             }
         }
+    }
+
+    fun insertIdIfNotExists(id: String) {
+        if (!existsId(id)) insertId(id)
     }
 
     fun insertId(id: String): Boolean {

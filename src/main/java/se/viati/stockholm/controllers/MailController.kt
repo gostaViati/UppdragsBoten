@@ -10,21 +10,21 @@ import se.viati.stockholm.services.PostMailsToSlackService
 
 @RestController
 class MailController(
-        val databaseService: DatabaseService,
-        val postMailsToSlackService: PostMailsToSlackService
+    val databaseService: DatabaseService,
+    val postMailsToSlackService: PostMailsToSlackService
 ) {
 
-    @PutMapping("/run")
-    fun run() = postMailsToSlackService.getMailsAndPostToSlack()
+  @PutMapping("/run")
+  fun run() = postMailsToSlackService.getMailsAndPostToSlack()
 
-    @GetMapping("/mails/count")
-    fun count() = databaseService.count()
+  @GetMapping("/mails/count")
+  fun count() = databaseService.count()
 
-    @PutMapping("/mails/init/{initialId}")
-    fun init(@PathVariable initialId: String): ResponseEntity<Void> =
-            if (databaseService.createDatabaseIfNotExists(initialId)) {
-                ok().build()
-            } else {
-                status(HttpStatus.INTERNAL_SERVER_ERROR).build()
-            }
+  @PutMapping("/mails/init/{initialId}")
+  fun init(@PathVariable initialId: String): ResponseEntity<Void> =
+      if (databaseService.createDatabaseIfNotExists(initialId)) {
+        ok().build()
+      } else {
+        status(HttpStatus.INTERNAL_SERVER_ERROR).build()
+      }
 }
