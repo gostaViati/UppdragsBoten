@@ -11,19 +11,14 @@ import se.viati.stockholm.services.domain.Assignment
 import se.viati.stockholm.services.domain.Mail
 import se.viati.stockholm.services.parsers.MailParser
 import java.util.*
-import kotlin.streams.toList
 
-
-/**
- * https://github.com/OfficeDev/ews-java-api/wiki/Getting-Started-Guide#using-the-library
- */
 @Service
 class PostMailsToSlackService {
 
   @Autowired
   private lateinit var databaseService: DatabaseService
   @Autowired
-  private lateinit var exchangeMailService: MailService
+  private lateinit var mailService: MailService
   @Autowired
   private lateinit var slackService: SlackService
   @Autowired
@@ -34,7 +29,6 @@ class PostMailsToSlackService {
   fun getMailsAndPostToSlack() {
     logger.info("Get latest emails and post the new ones to Slack")
     if (databaseService.isDatabaseInitialized()) {
-      // TODO: getLatestMailIds: List<MailId>
       val mailItemStream = getLatestMails(MAILS_TO_GET)
       postMailItemsToSlack(mailItemStream)
       logger.info("Done!")
@@ -44,13 +38,12 @@ class PostMailsToSlackService {
   }
 
   fun getLatestMails(mailsToGet: Int) =
-      exchangeMailService.getLatestMails(mailsToGet).toList()
+      mailService.getLatestMails(mailsToGet).toList()
 
 
   private fun postMailItemsToSlack(mails: List<Mail>) =
       mails
           .filter { (id) -> !databaseService.existsId(id) }
-          // TODO: forEach (in parallell?) getMail(MailId): Mail (which loads the contents)
           .flatMap { this.getAssignmentsFromMail(it) }
           // To remove duplicates, group by title
           .groupingBy { it.title }
@@ -152,7 +145,7 @@ class PostMailsToSlackService {
         "Avrop av "
     ).also { it.sortByDescending(String::length) }
 
-    private val MAILS_TO_GET = 151
+    private const val MAILS_TO_GET = 151
 
     private val logger = LoggerFactory.getLogger(PostMailsToSlackService::class.java)
   }

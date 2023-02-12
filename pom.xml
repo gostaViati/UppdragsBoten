@@ -4,7 +4,7 @@
 
     <groupId>se.viati.stockholm</groupId>
     <artifactId>outlook-to-slack</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
     <packaging>jar</packaging>
 
     <name>outlook-to-slack</name>
@@ -12,18 +12,21 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.2.RELEASE</version>
+        <version>2.3.1.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     
     <properties>
+        <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+<!--
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        <kotlin.version>1.3.21</kotlin.version>
+-->
+        <kotlin.version>1.6.10</kotlin.version>
         <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
     </properties>
-
+    
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -65,7 +68,7 @@
             <artifactId>jsoup</artifactId>
             <version>1.10.3</version>
         </dependency>
-
+        
         <!-- TEST -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -105,7 +108,7 @@
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-test</artifactId>
+            <artifactId>kotlin-test-junit</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
@@ -114,6 +117,11 @@
             <artifactId>assertj-core</artifactId>
             <version>3.11.1</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
         </dependency>
     </dependencies>
 
@@ -222,7 +230,7 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
-                <version>1.6.1</version>
+                <version>2.4.0</version>
                 <configuration>
                     <to>
                         <!-- not sure if :local is needed -->
